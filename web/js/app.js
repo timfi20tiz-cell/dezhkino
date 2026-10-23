@@ -9,6 +9,9 @@ if (tg) {
     tg.ready();
     tg.expand();
     document.body.classList.add("in-telegram");
+    if (tg.colorScheme === "dark" || window.matchMedia?.("(prefers-color-scheme: dark)").matches) {
+      document.body.classList.add("dark-theme");
+    }
   } catch (e) {
     console.log("Telegram WebApp context initialized in standalone mode");
   }
@@ -22,8 +25,22 @@ const state = {
   cart: {} // { [productId]: quantity }
 };
 
-// Загрузка живых данных товаров с сервера
+// Загрузка живых данных товаров (с поддержкой localStorage для GitHub Pages и API для локального сервера)
 async function fetchLiveProducts() {
+  // 1. Сначала проверяем изменения из панели управления в localStorage
+  try {
+    const cached = localStorage.getItem("dezhkino_products");
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        liveProducts = parsed;
+        renderProducts();
+        updateCartUI();
+      }
+    }
+  } catch (e) {}
+
+  // 2. Если есть бэкенд-сервер, подтягиваем данные через API
   try {
     const res = await fetch("/api/products");
     if (res.ok) {
@@ -35,7 +52,7 @@ async function fetchLiveProducts() {
       }
     }
   } catch (err) {
-    console.log("Локальный fallback: загружены базовые товары");
+    console.log("Локальный fallback: активен актуальный каталог");
   }
 }
 

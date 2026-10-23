@@ -46,6 +46,140 @@ body.in-telegram {
   --bg-surface: var(--tg-theme-secondary-bg-color, #ffffff);
 }
 
+/* Высокая контрастность в тёмной теме Telegram / ОС */
+body.dark-theme,
+body.in-telegram.dark-theme {
+  --bg-primary: #121814;
+  --bg-surface: #1c2620;
+  --bg-surface-warm: #26332b;
+  --bg-surface-tint: #1c2b21;
+  --text-main: #f2f6f3;
+  --text-muted: #b0bfb2;
+  --color-forest: #4ade80;        /* Яркий сочный изумрудно-мятный цвет цен */
+  --color-forest-dark: #22c55e;
+  --color-earth: #f0956b;
+  --border-subtle: #2d3b31;
+}
+
+@media (prefers-color-scheme: dark) {
+  body.in-telegram {
+    --bg-primary: #121814;
+    --bg-surface: #1c2620;
+    --bg-surface-warm: #26332b;
+    --bg-surface-tint: #1c2b21;
+    --text-main: #f2f6f3;
+    --text-muted: #b0bfb2;
+    --color-forest: #4ade80;
+    --color-forest-dark: #22c55e;
+    --color-earth: #f0956b;
+    --border-subtle: #2d3b31;
+  }
+}
+
+/* Чёткая видимость цен и текстов в тёмной теме */
+body.dark-theme .price-val,
+@media (prefers-color-scheme: dark) {
+  body.in-telegram .price-val {
+    color: #4ade80 !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+  body.in-telegram .product-desc {
+    color: #b0bfb2 !important;
+  }
+  body.in-telegram .header {
+    background: rgba(18, 24, 20, 0.94) !important;
+    border-bottom: 1px solid rgba(45, 59, 49, 0.8) !important;
+  }
+  body.in-telegram .header-admin-btn {
+    color: #e4ece6 !important;
+    border-color: #3b4d40 !important;
+    background: #1c2620 !important;
+  }
+  body.in-telegram .category-btn {
+    background: #1c2620 !important;
+    border-color: #2d3b31 !important;
+    color: #f2f6f3 !important;
+  }
+  body.in-telegram .category-btn.active {
+    background: #2e593a !important;
+    color: #ffffff !important;
+  }
+  body.in-telegram .story-card,
+  body.in-telegram .step-card {
+    background: #1c2620 !important;
+    border-color: #2d3b31 !important;
+  }
+  body.in-telegram .story-card-title,
+  body.in-telegram .step-title {
+    color: #f2f6f3 !important;
+  }
+  body.in-telegram .story-card-text,
+  body.in-telegram .step-desc {
+    color: #b0bfb2 !important;
+  }
+  body.in-telegram .product-card {
+    background: #1c2620 !important;
+    border-color: #2d3b31 !important;
+  }
+  body.in-telegram .product-title {
+    color: #f2f6f3 !important;
+  }
+  body.in-telegram .product-badge {
+    background: rgba(38, 51, 43, 0.95) !important;
+    color: #4ade80 !important;
+  }
+}
+
+body.dark-theme .price-val {
+  color: #4ade80 !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+body.dark-theme .product-desc {
+  color: #b0bfb2 !important;
+}
+body.dark-theme .header {
+  background: rgba(18, 24, 20, 0.94) !important;
+  border-bottom: 1px solid rgba(45, 59, 49, 0.8) !important;
+}
+body.dark-theme .header-admin-btn {
+  color: #e4ece6 !important;
+  border-color: #3b4d40 !important;
+  background: #1c2620 !important;
+}
+body.dark-theme .category-btn {
+  background: #1c2620 !important;
+  border-color: #2d3b31 !important;
+  color: #f2f6f3 !important;
+}
+body.dark-theme .category-btn.active {
+  background: #2e593a !important;
+  color: #ffffff !important;
+}
+body.dark-theme .story-card,
+body.dark-theme .step-card {
+  background: #1c2620 !important;
+  border-color: #2d3b31 !important;
+}
+body.dark-theme .story-card-title,
+body.dark-theme .step-title {
+  color: #f2f6f3 !important;
+}
+body.dark-theme .story-card-text,
+body.dark-theme .step-desc {
+  color: #b0bfb2 !important;
+}
+body.dark-theme .product-card {
+  background: #1c2620 !important;
+  border-color: #2d3b31 !important;
+}
+body.dark-theme .product-title {
+  color: #f2f6f3 !important;
+}
+body.dark-theme .product-badge {
+  background: rgba(38, 51, 43, 0.95) !important;
+  color: #4ade80 !important;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

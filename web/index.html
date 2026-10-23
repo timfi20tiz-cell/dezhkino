@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Семейное хозяйство «Дежкино» — Натуральные фермерские продукты</title>
+  
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- Стили -->
+  <link rel="stylesheet" href="css/style.css?v=3">
+</head>
+<body>
+
+  <!-- Шапка -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">🌾</div>
+        <div class="logo-text">
+          <h1>Дежкино</h1>
+          <span>Семейное хозяйство</span>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <a href="admin.html" class="header-admin-btn" title="Управление витриной (для владельца)">
+          <span>⚙️</span>
+          <span class="admin-btn-text">Кабинет</span>
+        </a>
+
+        <button id="headerCartBtn" class="header-cart-btn" aria-label="Открыть корзину">
+          <span>Корзина</span>
+          <span id="headerCartCount" class="cart-counter">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Главный экран (Hero в стиле Patagonia: Full-bleed Edge-to-Edge) -->
+  <section class="hero reveal">
+    <div class="hero-card">
+      <img src="images/hero-farm.jpg" alt="Фермерские просторы хозяйства Дежкино" class="hero-bg" loading="eager">
+      <div class="hero-overlay"></div>
+      <div class="container hero-container">
+        <div class="hero-content">
+          <div class="hero-tag">
+            <span>🌿</span> 100% честный деревенский продукт
+          </div>
+          <h2 class="hero-title">Свежее с земли.<br>Прямо к вашему столу.</h2>
+          <p class="hero-subtitle">
+            Мясо зернового откорма, домашняя птица, луговой мёд и сезонный урожай из деревни Дежкино. 
+            Без промышленной спешки, консервантов и антибиотиков.
+          </p>
+
+          <div class="hero-features">
+            <div class="feature-pill">
+              <span class="feature-icon">✓</span> Свободный выгул на лугу
+            </div>
+            <div class="feature-pill">
+              <span class="feature-icon">✓</span> Свежий забой строго под заказ
+            </div>
+            <div class="feature-pill">
+              <span class="feature-icon">✓</span> Прямая доставка в город
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Каталог продукции -->
+  <main class="catalog-section">
+    <div class="container">
+      <div class="catalog-header reveal">
+        <span class="section-label">Сезонный сбор • Осень 2026</span>
+        <h2 class="section-title">Витрина продукции</h2>
+        <nav id="categoriesNav" class="categories-nav" aria-label="Категории товаров">
+          <!-- Генерируется через JS -->
+        </nav>
+      </div>
+
+      <!-- Сетка карточек товаров -->
+      <div id="productsGrid" class="products-grid">
+        <!-- Генерируется через JS -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Манифест Дежкино (Patagonia Activism Quote Banner) -->
+  <section class="manifesto-section reveal">
+    <div class="container">
+      <div class="manifesto-inner">
+        <blockquote class="manifesto-quote">
+          «Мы верим, что настоящая еда растёт на живой земле, дышит чистым ветром и вбирает тепло солнца — без фабричной спешки и химии».
+        </blockquote>
+        <div class="manifesto-author">— Семейное дело Дежкино, 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Секция ценностей и принципов -->
+  <section class="story-section">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">Принципы и совесть</span>
+        <h2 class="section-title">Почему продукты из Дежкино — другие</h2>
+        <p style="color: var(--text-muted); max-width: 640px; margin-top: 8px; font-size: 0.98rem;">
+          Мы не фабрика и не перекупщики. Это наше семейное дело на своей земле, где чистота продукта — вопрос чести.
+        </p>
+      </div>
+
+      <div class="story-grid">
+        <div class="story-card reveal reveal-delay-1">
+          <div class="story-card-icon">🌾</div>
+          <h3 class="story-card-title">Свободный луговой выпас</h3>
+          <p class="story-card-text">
+            Птица гуляет на открытом воздухе, греется на солнце и питается естественной травой. Мясо получается плотным и ароматным, как в детстве.
+          </p>
+        </div>
+
+        <div class="story-card reveal reveal-delay-2">
+          <div class="story-card-icon">🍃</div>
+          <h3 class="story-card-title">Честный чистый откорм</h3>
+          <p class="story-card-text">
+            Только цельное зерно (пшеница, овёс, кукуруза) и колодезная вода. Принципиально без антибиотиков, ускорителей роста и гормонов.
+          </p>
+        </div>
+
+        <div class="story-card reveal reveal-delay-3">
+          <div class="story-card-icon">⏱️</div>
+          <h3 class="story-card-title">Свежесть строго под заказ</h3>
+          <p class="story-card-text">
+            Мы не храним мясо в морозилках месяцами. Забой и разделка производятся накануне доставки, чтобы к вам на стол попадал свежайший продукт.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Секция шагов заказа -->
+  <section class="story-section" style="background: var(--bg-surface-warm); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">Простой порядок</span>
+        <h2 class="section-title">Как получить заказ</h2>
+        <p style="color: var(--text-muted); max-width: 620px; margin-top: 8px; font-size: 0.98rem;">
+          Честный сервис без предоплат за «кота в мешке».
+        </p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card reveal reveal-delay-1">
+          <div class="step-number">01</div>
+          <h3 class="step-title">Выбор на витрине</h3>
+          <p class="step-desc">Добавьте нужные позиции в корзину на сайте или прямо в Telegram-боте.</p>
+        </div>
+
+        <div class="step-card reveal reveal-delay-2">
+          <div class="step-number">02</div>
+          <h3 class="step-title">Быстрое оформление</h3>
+          <p class="step-desc">Укажите имя и телефон. Заявка моментально падает фермеру на телефон.</p>
+        </div>
+
+        <div class="step-card reveal reveal-delay-3">
+          <div class="step-number">03</div>
+          <h3 class="step-title">Доставка и оплата</h3>
+          <p class="step-desc">Привезем заказ в город или ждем вас в Дежкино. Оплата после проверки свежести.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Футер -->
+  <footer style="margin-top: 40px; border-top: 1px solid var(--border-subtle); padding: 40px 0 32px; text-align: center; color: var(--text-muted); font-size: 0.88rem;">
+    <div class="container">
+      <p style="font-weight: 800; font-size: 1rem; color: var(--color-forest); margin-bottom: 8px; letter-spacing: -0.01em;">Семейное хозяйство «Дежкино» © 2026</p>
+      <p>Натуральная деревенская продукция с любовью к родной земле и честному труду.</p>
+    </div>
+  </footer>
+
+  <!-- Плавающая полоса корзины для мобильных -->
+  <div id="stickyCartBar" class="sticky-cart-bar">
+    <div class="sticky-cart-info">
+      <span id="stickyCartItems" class="sticky-cart-title">0 товаров</span>
+      <span class="sticky-cart-meta">Нажмите, чтобы оформить</span>
+    </div>
+    <div id="stickyCartTotal" class="sticky-cart-action">
+      0 ₽ →
+    </div>
+  </div>
+
+  <!-- Модальное окно корзины и заказа -->
+  <div id="cartModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Ваш заказ</h3>
+        <button id="modalCloseBtn" class="modal-close" aria-label="Закрыть">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div style="font-size: 0.8rem; color: #224229; background: #eaf1eb; border: 1px solid #d0e2d3; padding: 10px 14px; border-radius: var(--radius-sm); margin-bottom: 16px; line-height: 1.4;">
+          ⚖️ <b>Весовой товар:</b> итоговая стоимость птицы и мяса рассчитывается при взвешивании перед доставкой. Оплата строго по факту получения!
+        </div>
+
+        <div id="cartItemsList" class="cart-items-list">
+          <!-- Список выбранных позиций -->
+        </div>
+
+        <form id="checkoutForm" class="checkout-form">
+          <div class="form-group">
+            <label for="clientName">Ваше имя</label>
+            <input type="text" id="clientName" class="form-input" placeholder="Как к вам обращаться" required>
+          </div>
+
+          <div class="form-group">
+            <label for="clientPhone">Телефон для связи</label>
+            <input type="tel" id="clientPhone" inputmode="tel" class="form-input" placeholder="+7 (___) ___-__-__" required>
+          </div>
+
+          <div class="form-group">
+            <label for="clientAddress">Адрес доставки или самовывоз</label>
+            <input type="text" id="clientAddress" class="form-input" placeholder="Город, улица, дом (или самовывоз из Дежкино)" required>
+          </div>
+
+          <div class="form-group">
+            <label for="clientComment">Комментарий или пожелания</label>
+            <input type="text" id="clientComment" class="form-input" placeholder="Например: разделать на части, привезти в субботу">
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <div class="cart-total-row">
+          <span>Сумма заказа:</span>
+          <span id="cartModalTotal" style="color: var(--color-forest);">0 ₽</span>
+        </div>
+        <button type="submit" form="checkoutForm" class="submit-order-btn">
+          Подтвердить заказ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно успешного заказа -->
+  <div id="successModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 440px; text-align: center; padding: 32px 24px;">
+      <div style="font-size: 56px; margin-bottom: 12px;">🎉</div>
+      <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--color-forest); margin-bottom: 8px;">Заказ успешно принят!</h3>
+      <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.5; margin-bottom: 20px;">
+        Спасибо, <b id="successClientName">клиент</b>!<br>
+        Ваша заявка на сумму ориентировочно <b id="successOrderTotal" style="color: var(--color-forest);">0 ₽</b> передана в хозяйство «Дежкино». Мы свяжемся с вами для подтверждения времени доставки.
+      </p>
+      <button onclick="document.getElementById('successModal').classList.remove('open')" class="submit-order-btn" style="width: 100%;">
+        Отлично, понятно
+      </button>
+    </div>
+  </div>
+
+  <!-- Скрипты -->
+  <script src="js/products.js?v=9"></script>
+  <script src="js/app.js?v=9"></script>
+</body>
+</html>

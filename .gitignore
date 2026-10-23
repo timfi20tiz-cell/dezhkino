@@ -1,0 +1,25 @@
+# Секреты и токены (ВАЖНО для безопасности!)
+bot/.env
+.env
+*.env
+
+# Бинарники и временные файлы
+cloudflared.exe
+*.exe
+*.zip
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# ОС
+Thumbs.db
+Desktop.ini
+.DS_Store
+.idea/
+.vscode/

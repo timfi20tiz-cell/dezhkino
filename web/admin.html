@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Управление хозяйством — Дежкино (Админ-панель)</title>
+  <link rel="stylesheet" href="css/style.css?v=4">
+  <style>
+    /* Стили панели администратора Дежкино (Craft Patagonia UI) */
+    .admin-container {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+    }
+
+    /* Экран входа по PIN */
+    .login-box {
+      max-width: 380px;
+      margin: 80px auto 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      text-align: center;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .pin-input {
+      font-size: 2rem;
+      letter-spacing: 0.5em;
+      text-align: center;
+      width: 100%;
+      padding: 12px;
+      background: var(--bg-surface-warm);
+      border: 2px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin: 20px 0 16px;
+      outline: none;
+      font-weight: 800;
+      color: var(--color-forest);
+      transition: all 0.2s ease;
+    }
+    .pin-input:focus {
+      border-color: var(--color-forest);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(27, 53, 36, 0.15);
+    }
+
+    /* Шапка админки */
+    .admin-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .admin-stats {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .stat-pill {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 10px 16px;
+      border-radius: var(--radius-full);
+      font-size: 0.88rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    /* Карточки управления товарами */
+    .admin-product-row {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow-subtle);
+      transition: all 0.25s var(--ease-patagonia);
+    }
+    .admin-product-row:hover {
+      box-shadow: var(--shadow-hover);
+      border-color: #cbd5cb;
+    }
+    .admin-product-row.out-of-stock {
+      opacity: 0.72;
+      background: #fbf9f6;
+      border-style: dashed;
+    }
+
+    .admin-prod-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1 1 260px;
+    }
+    .admin-prod-icon {
+      font-size: 28px;
+      width: 54px;
+      height: 54px;
+      background: var(--bg-surface-warm);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .admin-prod-title {
+      font-weight: 800;
+      font-size: 1.02rem;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+    .admin-prod-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .admin-prod-controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* Поле редактирования цены */
+    .price-edit-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-surface-warm);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.2s ease;
+    }
+    .price-edit-group:focus-within {
+      border-color: var(--color-forest);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(27, 53, 36, 0.12);
+    }
+    .price-input-field {
+      width: 76px;
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--color-forest);
+      background: transparent;
+      border: none;
+      outline: none;
+      text-align: right;
+      font-family: inherit;
+    }
+
+    /* Высококонтрастный четкий тумблер (Toggle Switch) */
+    .switch-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+      padding: 4px 8px;
+      border-radius: var(--radius-full);
+      background: var(--bg-surface-warm);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.2s ease;
+    }
+    .switch-label:hover {
+      border-color: #cbd5cb;
+    }
+    .toggle-checkbox {
+      position: relative;
+      width: 52px;
+      height: 28px;
+      appearance: none;
+      -webkit-appearance: none;
+      background: #cfc8bd;
+      border: 2px solid #b3aba0;
+      outline: none;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-patagonia);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.12);
+      flex-shrink: 0;
+    }
+    .toggle-checkbox:checked {
+      background: #1b5e20;
+      border-color: #144618;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 8px rgba(27, 94, 32, 0.35);
+    }
+    .toggle-checkbox::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+      transition: transform 0.25s var(--ease-patagonia);
+    }
+    .toggle-checkbox:checked::before {
+      transform: translateX(24px);
+    }
+
+    .status-badge {
+      font-size: 0.84rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      min-width: 90px;
+    }
+    .status-badge.in-stock {
+      color: #1b5e20;
+    }
+    .status-badge.out-of-stock {
+      color: #7d7568;
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--color-forest);
+      color: #fff;
+      padding: 12px 22px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.9rem;
+      box-shadow: var(--shadow-modal);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s var(--ease-patagonia);
+      z-index: 200;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .toast-msg.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Экран авторизации (если не вошел) -->
+  <div id="loginScreen" class="container">
+    <div class="login-box">
+      <div style="font-size: 44px; margin-bottom: 8px;">🔐</div>
+      <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--color-forest); letter-spacing: -0.02em;">Управление «Дежкино»</h2>
+      <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">Введите PIN-код для доступа</p>
+      
+      <form id="pinForm">
+        <input type="password" id="pinInput" class="pin-input" maxlength="4" placeholder="••••" inputmode="numeric" pattern="[0-9]*" autofocus required>
+        <button type="submit" class="submit-order-btn" style="width: 100%;">Войти в кабинет</button>
+      </form>
+      <div id="pinError" style="color: #c4382d; font-size: 0.85rem; margin-top: 10px; display: none;"></div>
+      <p style="margin-top: 18px;"><a href="index.html" style="color: var(--text-muted); font-size: 0.85rem; text-decoration: none; font-weight: 600;">← Вернуться на витрину</a></p>
+    </div>
+  </div>
+
+  <!-- Экран администратора (после успешного входа) -->
+  <div id="adminScreen" class="admin-container" style="display: none;">
+    <div class="admin-header-row">
+      <div>
+        <h1 style="font-size: 1.6rem; font-weight: 900; color: var(--color-forest); letter-spacing: -0.02em;">🌾 Панель фермера</h1>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 2px;">Управление ценами и наличием товаров в реальном времени</p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <a href="index.html" class="header-admin-btn" style="text-decoration: none;">Витрина ↗</a>
+        <button id="logoutBtn" class="header-admin-btn" style="color: #c4382d; border-color: rgba(196, 56, 45, 0.4); cursor: pointer;">Выйти</button>
+      </div>
+    </div>
+
+    <!-- Статистика -->
+    <div class="admin-stats">
+      <div class="stat-pill">📦 Всего товаров: <b id="statTotal" style="color: var(--color-forest); margin-left: 4px;">0</b></div>
+      <div class="stat-pill" style="color: #1b5e20;">✅ В наличии: <b id="statInStock" style="margin-left: 4px;">0</b></div>
+      <div class="stat-pill" style="color: #7d7568;">❌ Закончилось: <b id="statOutOfStock" style="margin-left: 4px;">0</b></div>
+    </div>
+
+    <!-- Список товаров для управления -->
+    <div id="adminProductsList">
+      <!-- Генерируется через JS -->
+    </div>
+  </div>
+
+  <!-- Всплывающее уведомление о сохранении -->
+  <div id="toast" class="toast-msg">Изменения сохранены!</div>
+
+  <script>
+    let products = [];
+    const toast = document.getElementById("toast");
+
+    function showToast(text) {
+      toast.textContent = text;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    // Проверка сессии входа
+    if (sessionStorage.getItem("adminAuth") === "true") {
+      showAdminDashboard();
+    }
+
+    // Обработка ввода PIN
+    document.getElementById("pinForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const pin = document.getElementById("pinInput").value;
+      const errorDiv = document.getElementById("pinError");
+      errorDiv.style.display = "none";
+
+      try {
+        const res = await fetch("/api/admin/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ pin })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          sessionStorage.setItem("adminAuth", "true");
+          sessionStorage.setItem("adminPin", pin);
+          showAdminDashboard();
+        } else {
+          errorDiv.textContent = data.error || "Неверный PIN";
+          errorDiv.style.display = "block";
+        }
+      } catch (err) {
+        errorDiv.textContent = "Ошибка связи с сервером";
+        errorDiv.style.display = "block";
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      sessionStorage.removeItem("adminAuth");
+      location.reload();
+    });
+
+    async function showAdminDashboard() {
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("adminScreen").style.display = "block";
+      await fetchAdminProducts();
+    }
+
+    async function fetchAdminProducts() {
+      try {
+        const res = await fetch("/api/products");
+        products = await res.json();
+        renderAdminList();
+      } catch (err) {
+        console.error("Ошибка загрузки товаров:", err);
+      }
+    }
+
+    function renderAdminList() {
+      const listContainer = document.getElementById("adminProductsList");
+      const inStockCount = products.filter(p => p.inStock !== false).length;
+      
+      document.getElementById("statTotal").textContent = products.length;
+      document.getElementById("statInStock").textContent = inStockCount;
+      document.getElementById("statOutOfStock").textContent = products.length - inStockCount;
+
+      listContainer.innerHTML = products.map(p => {
+        const inStock = p.inStock !== false;
+        return `
+          <div class="admin-product-row ${inStock ? '' : 'out-of-stock'}" id="row-${p.id}">
+            <div class="admin-prod-info">
+              <div class="admin-prod-icon">
+                ${p.image ? `<img src="${p.image}" style="width: 100%; height: 100%; object-fit: cover;">` : p.icon}
+              </div>
+              <div>
+                <div class="admin-prod-title">${p.name}</div>
+                <div class="admin-prod-desc">${p.unit}</div>
+              </div>
+            </div>
+
+            <div class="admin-prod-controls">
+              <!-- Цена -->
+              <div class="price-edit-group" title="Нажмите, чтобы изменить цену">
+                <input type="number" 
+                       class="price-input-field" 
+                       inputmode="numeric"
+                       value="${p.price}" 
+                       onchange="saveProductPrice('${p.id}', this.value)">
+                <span style="font-size: 0.95rem; font-weight: 800; color: var(--color-forest);">₽</span>
+              </div>
+
+              <!-- Высококонтрастный тумблер наличия -->
+              <label class="switch-label" title="Переключить статус наличия товара">
+                <input type="checkbox" 
+                       class="toggle-checkbox" 
+                       ${inStock ? 'checked' : ''} 
+                       onchange="toggleProductStock('${p.id}', this.checked)">
+                <span class="status-badge ${inStock ? 'in-stock' : 'out-of-stock'}">
+                  ${inStock ? '● В наличии' : '○ Закончилось'}
+                </span>
+              </label>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // Сохранение цены товара
+    window.saveProductPrice = async function(id, newPrice) {
+      const prod = products.find(p => p.id === id);
+      if (!prod) return;
+      prod.price = Number(newPrice);
+
+      await syncProduct(prod);
+      showToast(`Цена «${prod.name}» обновлена: ${prod.price} ₽`);
+    };
+
+    // Переключение наличия товара
+    window.toggleProductStock = async function(id, isInStock) {
+      const prod = products.find(p => p.id === id);
+      if (!prod) return;
+      prod.inStock = isInStock;
+
+      await syncProduct(prod);
+      renderAdminList();
+      showToast(`${prod.name}: ${isInStock ? 'В наличии' : 'Закончилось'}`);
+    };
+
+    async function syncProduct(productData) {
+      try {
+        const pin = sessionStorage.getItem("adminPin") || "";
+        const res = await fetch("/api/products", {
+          method: "POST",
+          headers: { 
+            "Content-Type": "application/json",
+            "X-Admin-PIN": pin
+          },
+          body: JSON.stringify(productData)
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || `Ошибка сервера (${res.status})`);
+        }
+      } catch (e) {
+        alert("Ошибка при сохранении: " + e.message);
+      }
+    }
+  </script>
+</body>
+</html>

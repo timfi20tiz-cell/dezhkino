@@ -8,6 +8,7 @@ cloudflared.exe
 *.exe
 *.zip
 *.log
+push_to_github.bat
 
 # Python
 __pycache__/

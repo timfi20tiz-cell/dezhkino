@@ -9,6 +9,8 @@ cloudflared.exe
 *.zip
 *.log
 push_to_github.bat
+start_bot.bat
+*.bat
 
 # Python
 __pycache__/

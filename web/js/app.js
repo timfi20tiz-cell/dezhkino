@@ -279,20 +279,60 @@ if (checkoutForm) {
       submitBtn.textContent = "Отправка заказа...";
     }
 
+    // 1. Формируем подробный отчет по заказу для Telegram
+    const tgUser = tg?.initDataUnsafe?.user;
+    const userMention = tgUser 
+      ? `@${tgUser.username || 'нет_ника'} (${tgUser.first_name || ''}, ID: <code>${tgUser.id}</code>)` 
+      : 'через браузер/сайт';
+
+    const itemsFormatted = Object.entries(state.cart).map(([id, qty]) => {
+      const p = liveProducts.find(prod => prod.id === id);
+      return `• <b>${p.name}</b>: ${qty} шт. × ${p.price} ₽ = <b>${p.price * qty} ₽</b>`;
+    }).join("\n");
+
+    const messageHtml = 
+`🔔 <b>НОВЫЙ ЗАКАЗ — ДЕЖКИНО!</b>
+
+👤 <b>Покупатель:</b> ${name}
+📞 <b>Телефон:</b> <a href="tel:${phone}">${phone}</a>
+📍 <b>Адрес:</b> ${address}
+${comment ? `💬 <b>Пожелания:</b> ${comment}\n` : ''}📱 <b>Клиент в TG:</b> ${userMention}
+
+🛒 <b>Состав заказа:</b>
+${itemsFormatted}
+
+💰 <b>Итого к оплате:</b> <b>${total} ₽</b> (оплата по факту проверки)`;
+
+    // 2. Прямая отправка в Telegram Bot API (работает мгновенно 24/7 с GitHub Pages!)
     try {
-      const response = await fetch("/api/order", {
+      await fetch("https://api.telegram.org/bot8977077034:AAF0N-kUmFkIn717Y4esrS6VEoBD2nKC2uY/sendMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: "6374158037",
+          text: messageHtml,
+          parse_mode: "HTML"
+        })
+      });
+    } catch (tgErr) {
+      console.warn("Direct TG dispatch fallback:", tgErr);
+    }
+
+    // 3. Дублируем через tg.sendData, если Mini App открыт по кнопке клавиатуры
+    try {
+      if (tg && typeof tg.sendData === "function") {
+        tg.sendData(JSON.stringify(orderData));
+      }
+    } catch (e) {}
+
+    // 4. Локальный fallback (если запущен локальный Python сервер)
+    try {
+      await fetch("/api/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderData)
       });
-
-      const resData = await response.json();
-      if (!resData.ok) {
-        console.warn("Ошибка API сервера:", resData);
-      }
-    } catch (err) {
-      console.error("Ошибка отправки на сервер:", err);
-    }
+    } catch (err) {}
 
     // Сброс корзины и закрытие модалки
     state.cart = {};
